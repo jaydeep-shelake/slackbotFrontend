@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Exo+2&family=Montserrat:wght@600&family=Open+Sans&family=Oswald&family=Poppins:wght@300;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+  font-family: 'Exo 2', sans-serif;
+  font-family: 'Montserrat', sans-serif;
+  font-family: 'Open Sans', sans-serif;
+  font-family: 'Oswald', sans-serif;
+  font-family: 'Poppins', sans-serif;
+}
+body{
+  background: #000000;
+}
+@layer components {
+    .bg-secondary-gradient {
+      background: linear-gradient(90deg, #231735 -22.89%, #121A35 4.22%, #012E40 76.09%, #231735 119.14%, #121A35 145.64%);
+    }
+    .bg-primary-gradient{
+        background: linear-gradient(270deg, rgba(127, 60, 221, 0.162) 50%, rgba(92, 39, 165, 0) 100%);
+    }
+    .bg-yello-gardient{
+      background: linear-gradient(270deg, rgba(221, 210, 60, 0.162) 50%, rgba(165, 159, 39, 0) 100%);
+    }
+    .bg-reject-gradient{
+      background: linear-gradient(270deg, rgba(221, 60, 60, 0.162) 50%, rgba(165, 39, 39, 0) 100%);
+    }
+    .bg-approve{
+      background: linear-gradient(270deg, rgba(98, 221, 60, 0.162) 50%, rgba(77, 165, 39, 0) 100%);
+
+    }
+    .bg-modal-transparent{
+      background: rgba(16, 16, 16, 0.311);
+    }
+    .box-shadow-user-card{
+      box-shadow: -5px -5px 10px rgba(255,255,255,.05),
+                 5px 5px 10px rgba(0, 0, 0, 0.5);
+    }
+   
+    
+  }
+
+  .ss-btn{
+        @apply py-2 px-4 border-none rounded-md outline-none text-white
+  }
+  .link-item {
+     @apply w-full  rounded-sm my-4 text-white flex items-center justify-start
+  }
+  .link-item-a{
+   @apply  text-white text-lg  w-full p-2 rounded-sm
+  }
+  .ss-input{
+    @apply outline-none  p-2 rounded-md bg-black  w-full my-3 text-ss-purple
+  }
+  .add-frame {
+   @apply flex flex-col items-center justify-center border-2 border-dashed border-ss-purple p-3 bg-black cursor-pointer
+  }
+
+  ::-webkit-scrollbar {
+    width: 5px;
+    border-radius: 4px;
+   
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #7F3CDD;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #9864e1;
+  }
+ 

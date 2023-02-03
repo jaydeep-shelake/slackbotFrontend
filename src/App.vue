@@ -1,26 +1,51 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <RouterView/>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
+<script setup>
+import {onBeforeUnmount, onMounted,watch} from "vue"
+import { storeToRefs } from "pinia";
+import {useSoketStore} from "@/store/soketStore"
+import {useLeavesStore} from "@/store/leavesStore"
+import {useUserStore} from "@/store/userStore"
+import { useHolidayStore } from "./store/holidayStore"
+import { useStandupStore } from "./store/standupStore";
+const soketStore =useSoketStore()
+const leavesStore = useLeavesStore()
+const userStore = useUserStore()
+const holidayStore =useHolidayStore()
+const standupStore = useStandupStore()
+const {user} = storeToRefs(userStore)
+onMounted(()=>{
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
+if(localStorage.getItem("slackUser")!==null){
+  soketStore.setupSocketConnection()
+
+leavesStore.fetchLeaves()
+userStore.fetchUserTeam()
+holidayStore.fetchHolidays()
+userStore.fetchTeamLeaves()
+standupStore.fetchStandups()
 }
+// 
+})
+
+watch(user,()=>{
+  if(localStorage.getItem("slackUser")){
+  soketStore.setupSocketConnection()
+  }
+leavesStore.fetchLeaves()
+userStore.fetchUserTeam()
+holidayStore.fetchHolidays()
+userStore.fetchTeamLeaves()
+standupStore.fetchStandups()
+})
+
+
+
+onBeforeUnmount(()=>{
+  soketStore.disconnect()
+})
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+
