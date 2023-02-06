@@ -7,6 +7,7 @@ export const useConfigStore = defineStore('configStore',{
             modalOpen:false,
             userModalOpen:false,
             leadModalOpen:false,
+            peopleModal:false,
             listOfTeam:[],
             listOfLead:[],
             allTeams:[],
@@ -50,6 +51,9 @@ export const useConfigStore = defineStore('configStore',{
         toggleMsgModal(msg){
         this.openMsgModal=!this.openMsgModal
         this.msgModalMsg=msg
+        },
+        togglePeopleModal(){
+         this.peopleModal=!this.peopleModal
         },
         saveUsersToTeam(team){
        this.listOfTeam=[...this.listOfTeam,...team]

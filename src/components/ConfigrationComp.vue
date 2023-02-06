@@ -11,7 +11,7 @@
               <img class="w-[50px] h-[50px]" src="https://res.cloudinary.com/qtalk/image/upload/v1674037089/SuperLeaves/Plus_ttu9ws.svg" alt="add"/>
              <p class="text-xl text-white mt-3">Add Team</p>
             </router-link>
-            <div class="w-[200px] h-[200px] add-frame">
+            <div @click="addUser" class="w-[200px] h-[200px] add-frame">
               <img class="w-[50px] h-[50px]" src="https://res.cloudinary.com/qtalk/image/upload/v1674037089/SuperLeaves/Plus_ttu9ws.svg" alt="add"/>
              <p class="text-xl text-white mt-3">Add People</p>
             </div>
@@ -28,13 +28,21 @@
 </div>
 <HolidayModal v-if="holidayStore.openHolidayModal"/>
 <MessageModal v-if="configStore.openMsgModal"/>
+<PeopleModal  v-if="configStore.peopleModal"/>
 </template>
 
 <script setup>
 import HolidayModal from './modals/HolidayModal.vue';
 import MessageModal from './modals/MessageModal.vue';
+import PeopleModal from './modals/PeopleModal.vue'
 import { useConfigStore } from '@/store/configStore';
 import { useHolidayStore } from '@/store/holidayStore';
+import api from '@/api/api';
 const holidayStore  = useHolidayStore()
 const configStore=useConfigStore()
+
+async function addUser(){
+const {data} =await api.get(`/users/userByEmail?email=jaydeep@ssup.co`)
+console.log(data)
+}
 </script>
