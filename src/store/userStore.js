@@ -22,6 +22,9 @@ export const useUserStore = defineStore("userStore",{
    return {avatar:this.user?.user?.image_192,email:this.user?.user?.email,slackId:this.user?.user?.id,
     name:this.user?.user?.name}
   },
+  loggedIn(){
+    return this.user?true:false
+  },
   
   teamDetails(){
     return{teamId:this.user?.team?.id}
@@ -36,8 +39,8 @@ export const useUserStore = defineStore("userStore",{
     if(this.user===null){
     const {data} = await axios.post("http://localhost:5000/auth/callback",{code:code})
     const identity = data?.identity
-     this.user={team:identity.team,user:identity.user,tokem:data.token}
-     localStorage.setItem("slackUser",JSON.stringify({team:identity.team,user:identity.user,token:data.token}))
+     this.user={team:identity.team,user:identity.user,tokem:data.token,...data.user}
+     localStorage.setItem("slackUser",JSON.stringify({team:identity.team,user:identity.user,token:data.token,...data.user}))
      console.log("localstorage is set")
      this.fetchUser()
      this.router.push('/')

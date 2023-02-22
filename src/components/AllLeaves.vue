@@ -3,22 +3,11 @@
     <div class="w-[60%] h-full flex items-center justify-start flex-col">
     <div class="w-[90%] h-[85%] mt-10 bg-ss-body rounded-lg flex flex-col items-start justify-start px-8 py-6">
       <div class="flex items-center justify-evenly w-full mb-10">
-      <div class="p-2 w-[140px] h-[140px]  bg-black flex flex-col items-center justify-evenly rounded-md">
-        <h1 class="text-ss-purple text-5xl">{{ leavesStore.getEarnedLeaves }}</h1>
-         <p class="text-gray-300 text-center w-full">Earned Leaves</p>
+      <div v-for="user in userStore.leaveCount" :key="user._id" class="p-2 w-[140px] h-[140px]  bg-black flex flex-col items-center justify-evenly rounded-md">
+        <h1 class="text-ss-purple text-5xl">{{ user.count }}</h1>
+         <p class="text-gray-300 text-center w-full">{{ user.type }}</p>
       </div>
-      <div class="p-2 w-[140px] h-[140px]  bg-black flex flex-col items-center justify-evenly rounded-md">
-        <h1 class="text-ss-purple text-5xl">{{ leavesStore.getSickLeaves }}</h1>
-         <p class="text-gray-300 text-center">Sick Leaves</p>
-      </div>
-      <div class="p-2 w-[140px] h-[140px] bg-black flex flex-col items-center justify-evenly rounded-md">
-        <h1 class="text-ss-purple text-5xl">{{ leavesStore.getFestiveLeaves }}</h1>
-         <p class="text-gray-300 text-center">Festive Leaves</p>
-      </div>
-      <div class="p-2 w-[140px] h-[140px] bg-black flex flex-col items-center justify-evenly rounded-md">
-        <h1 class="text-ss-purple text-5xl">8</h1>
-         <p class="text-gray-300 text-center">Remote Work</p>
-      </div>
+      
       </div>
         <div class="w-full flex items-center justify-between">
          <h2 class="text-2xl text-white">All Leaves</h2>
@@ -65,8 +54,10 @@
 
 <script setup>
 import { useLeavesStore } from '@/store/leavesStore';
+import { useUserStore } from '@/store/userStore';
 import LoaderSpiner from './LoaderSpiner.vue';
 const leavesStore=useLeavesStore()
+const userStore = useUserStore().user
 
 
 </script>

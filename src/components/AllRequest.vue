@@ -27,7 +27,7 @@
               </div>
               <div class="flex items-start justify-start  w-full mt-4">
                 <button v-if="!requestStore.laoding" class="ss-btn bg-ss-purple text-sm mr-2" @click="handleApproveRequest({userId:request.userId
-,approver:request.approverId,teamId:request.teamId,messageTs:request.messageTs,approved:true})">Approve</button>
+,approver:request.approverId,teamId:request.teamId,messageTs:request.messageTs,approved:true,_id:request._id,type:request.type})">Approve</button>
                 <button v-else class="ss-btn bg-ss-purple text-sm mr-2 flex items-center justify-center" ><LoaderSpiner/></button>
 
                 <button class="ss-btn bg-ss-purple text-sm" @click="handleApproveRequest({userId:request.userId

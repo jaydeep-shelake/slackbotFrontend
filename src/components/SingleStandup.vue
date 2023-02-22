@@ -16,7 +16,18 @@
            <p>Weekly</p>
         </div>
         <div class="py-1 px-3  text-ss-light-purple rounded-xl mx-2">
-           <p> <input type="text" class="border-none outline-none bg-transparent w-[35px]" v-model="time"> am daily</p>
+          <div @click="showTimeModal=!showTimeModal" class="text-ss-light-purpl flex items-center justify-center"> <img class="mr-2" src="https://res.cloudinary.com/qtalk/image/upload/v1675843135/SuperLeaves/icons8-wall-clock-24_prhyzu.png" alt="date"> 
+            <div v-if="!showTimeModal">{{ time }} </div>
+            <select v-else @click.stop v-model="time"  name="time" id="time" class="bg-black outline-none border-none">
+            <option :value="time">{{ time }}</option>
+            <option value="10:30 AM">10:30 AM</option>
+            <option value="11:00 AM">11:00 AM</option>
+            <option value="11:30 PM">11:30 AM</option>
+            <option value="12:00 PM">12:00 PM</option>
+            <option value="12:30 PM">12:30 PM</option>
+           </select>
+          </div >
+          
         </div>
         <div class="py-1 px-3  text-ss-light-purple rounded-xl mx-2">
            <p> {{ standupData.standup.users.length }} members</p>
@@ -49,6 +60,7 @@
       </div>
      </div>
     </div>
+
     <div class="w-full flex flex-wrap items-start justify-start flex-col mt-8">
       <div class=" py-1 px-3 bg-ss-alpha-purple text-ss-light-purple rounded-md ">
        <p class="text-white text-l">Quetions :</p>
@@ -66,6 +78,83 @@
       </div>
       
     </div>
+
+    <div class="w-full flex flex-wrap items-start justify-start flex-col mt-8">
+      <div class=" py-1 px-3 bg-ss-alpha-purple text-ss-light-purple rounded-md mb-4 ">
+       <p class="text-white text-l">Reminders :</p>
+      </div>
+      <div class="flex items-start justify-start flex-col mb-6">
+        <label for="alert1" class="text-white mb-2">Alice sends a reminder to each participant</label>
+            <select  name="alert" id="alert1" class="border text-ss-light-purple border-ss-purple p-2 outline-none bg-black
+             rounded-md" v-model="firstAlert" >
+             <option  :value="firstAlert"  >{{ firstAlert }} minute before the standup</option>
+            
+              <option  value="30" class="text-ss-purple">30 minute before the standup</option>
+              <option  value="60" class="text-ss-purple">60 minute before the standup</option>
+            </select>
+      </div>
+    
+      <div class="flex items-start justify-start flex-col">
+        <label for="alert1" class="text-white mb-2"> Alice sends a another reminder to each participant</label>
+            <select  v-model="secondAlert"  name="alert" id="alert1" class="border border-ss-purple p-2 outline-none bg-black  text-ss-light-purple rounded-md">
+              
+              <option  :value="secondAlert"  >{{ secondAlert }} minute before the standup</option>
+              <option  value="30"  >30 minute before the standup</option>
+              <option  value="15"  >15 minute before the standup</option>
+            </select>
+      </div>
+    
+    </div>
+    <div class="w-full flex flex-wrap items-start justify-start flex-col mt-10">
+      <div class=" py-1 px-3 bg-ss-alpha-purple text-ss-light-purple rounded-md mb-4 ">
+       <p class="text-white text-l">Report format :</p>
+      </div>
+       <div class="w-full flex items-start justify-start cursor-pointer">
+      
+        <div @click="messageViewType='questions' "  class="w-[200px] mx-2 p-2 rounded-md bg-black flex flex-col items-center justify-between " :class="{'border-2 border-ss-purple':messageViewType==='questions'}">
+          <p class="text-white">Group by question</p>
+          <div class="w-full p-2 bg-ss-light-purple mt-4 rounded-md">
+            <p class="text-ss-purple text-l font-semibold">Daily Standup Report</p>
+            <div class="w-full flex flex-col items-start justify-center mt-2">
+              <p class="text-ss-purple text-l ">Question 1</p>
+              <p class="text-gray-500 text-xs pl-2">User 1</p>
+              <p class="text-gray-600 text-sm pl-2">Answer for quetion 1</p>
+              <p class="text-gray-500 text-xs pl-2">User 2</p>
+              <p class="text-gray-600 text-sm pl-2">Answer for quetion 1</p>
+            </div>
+            <div class="w-full flex flex-col items-start justify-center mt-2">
+              <p class="text-ss-purple text-l ">Question 2</p>
+              <p class="text-gray-500 text-xs pl-2">User 1</p>
+              <p class="text-gray-600 text-sm pl-2">Answer for quetion 2</p>
+              <p class="text-gray-500 text-xs pl-2">User 2</p>
+              <p class="text-gray-600 text-sm pl-2">Answer for quetion 2</p>
+            </div>
+          </div>
+        </div>
+        <div @click="messageViewType='user'" class="w-[200px] p-2 rounded-md bg-black flex flex-col items-center justify-between " :class="{'border-2 border-ss-purple':messageViewType==='user'}">
+          <p class="text-white">Group by user</p>
+          <div class="w-full p-2 bg-ss-light-purple mt-4 rounded-md">
+            <p class="text-ss-purple text-l font-semibold">Daily Standup Report</p>
+            <div class="w-full flex flex-col items-start justify-center mt-2">
+              <p class="text-ss-purple text-l ">User 1</p>
+              <p class="text-gray-500 text-xs pl-2">Question 1</p>
+              <p class="text-gray-600 text-sm pl-2">Answer for quetion 1</p>
+              <p class="text-gray-500 text-xs pl-2">Question 2</p>
+              <p class="text-gray-600 text-sm pl-2">Answer for quetion 2</p>
+            </div>
+            <div class="w-full flex flex-col items-start justify-center mt-2">
+              <p class="text-ss-purple text-l ">User 2</p>
+              <p class="text-gray-500 text-xs pl-2">Question 1</p>
+              <p class="text-gray-600 text-sm pl-2">Answer for quetion 1</p>
+              <p class="text-gray-500 text-xs pl-2">Question 2</p>
+              <p class="text-gray-600 text-sm pl-2">Answer for quetion 2</p>
+            </div>
+          </div>
+        </div>
+       </div>
+     
+    </div>
+
     <div class="flex w-full items-center justify-start mt-5">
       <button v-if="!updateLoading" :class="{'text-white bg-ss-light-purple py-1 px-4 rounded-sm':setSaveBtnToDefault,'text-white bg-ss-purple py-1 px-4 rounded-sm':!setSaveBtnToDefault}" :disabled="setSaveBtnToDefault" @click="updateStandup">Save</button>
       <button v-else class='text-white bg-ss-purple py-1 px-4 rounded-sm flex items-center justify-center' ><LoaderSpiner/></button>
@@ -91,7 +180,7 @@
 
 <script setup>
  import api from '@/api/api';
-import { watchEffect,ref, watch, nextTick} from '@vue/runtime-core';
+import { ref, watch, nextTick,watchEffect} from '@vue/runtime-core';
 import LoaderSpiner from './LoaderSpiner.vue';
 import UsersModal from './modals/UsersModal.vue';
 import { useRoute } from 'vue-router';
@@ -99,9 +188,11 @@ import { useConfigStore } from '@/store/configStore';
  const {id}= useRoute().params
  const configStore=useConfigStore()
  
- const standupData= ref({})
+ const standupData= ref(null)
  const users = ref([])
  const quetion=ref('')
+
+
  const showQueModal=ref(false)
  const intialUser=ref([])
  const questions = ref([])
@@ -109,11 +200,21 @@ import { useConfigStore } from '@/store/configStore';
  const time=ref('')
  const initialTime=ref('')
  const loading = ref(false)
+ const showTimeModal = ref(false)
  const updateLoading = ref(false)
  const setSaveBtnToDefault=ref(true)
+ const messageViewType = ref('')
+ const initialMessageViewType = ref('')
+ const firstAlert = ref('')
+ const initalFirstAlert=ref('')
+ const secondAlert=ref('')
+ const initialSecondAlert=ref()
+
+ 
  watchEffect(async()=>{
    loading.value=true
    const {data} = await api.get(`/standup/${id}`)
+
     standupData.value=data
     loading.value=false
     users.value=data.standup.users
@@ -122,11 +223,23 @@ import { useConfigStore } from '@/store/configStore';
     initialQue.value=data.standup.quetions
     time.value=data.standup.standUpTime
     initialTime.value=data.standup.standUpTime
+    messageViewType.value=data.standup.messageViewType
+    initialMessageViewType.value=data.standup.messageViewType
+    firstAlert.value=getAlertTimeinMin(data.standup.firstAlert)
+    initalFirstAlert.value=getAlertTimeinMin(data.standup.firstAlert)
+    secondAlert.value=getAlertTimeinMin(data.standup.secondAlert)
+    initialSecondAlert.value=getAlertTimeinMin(data.standup.secondAlert)
+    console.log(messageViewType.value,initialMessageViewType.value)
+     
     nextTick(() => {
-      setSaveBtnToDefault.value=true
+     setSaveBtnToDefault.value=true
     })
     
+    
  })
+
+
+ 
 
  function getSelectedUsers(selectedUsers){
   users.value=[...users.value,...selectedUsers]
@@ -136,14 +249,15 @@ import { useConfigStore } from '@/store/configStore';
   users.value= users.value.filter((item)=>user.userId!==item.userId)
  }
  
- watch(() => [users.value,questions.value,time.value],()=>{
-  if(JSON.stringify(users.value)==JSON.stringify(intialUser.value)&&JSON.stringify(questions.value)==JSON.stringify(initialQue.value)&&time.value===initialTime.value){
+ watch(() => [users.value,questions.value,time.value,messageViewType.value,firstAlert.value,secondAlert.value],()=>{
+  if(JSON.stringify(users.value)==JSON.stringify(intialUser.value)&&JSON.stringify(questions.value)==JSON.stringify(initialQue.value)&&time.value===initialTime.value&& messageViewType.value==initialMessageViewType.value&&firstAlert.value===initalFirstAlert.value && secondAlert.value==initialSecondAlert.value){
      setSaveBtnToDefault.value=true
+   
   }
   else{
     setSaveBtnToDefault.value=false
     
-
+    
   }
  
  })
@@ -164,13 +278,47 @@ import { useConfigStore } from '@/store/configStore';
 
 async function updateStandup(){
   updateLoading.value=true
-    await api.put(`/standup/${id}`,{
+   await api.put(`/standup/${id}`,{
       questions:questions.value,
       time:time.value,
-      users:users.value
+      users:users.value,
+      messageViewType:messageViewType.value,
+      firstAlert:substractStandupTime(firstAlert.value),
+      secondAlert:substractStandupTime(secondAlert.value)
     })
     updateLoading.value=false
     setSaveBtnToDefault.value=true
+    
  }
+
+
+ // this function will substract the minutes from the time 
+ function substractStandupTime(min){
+ const  standupTime = time.value
+ let date = new Date("01/01/2000 " + standupTime);
+  date.setMinutes(date.getMinutes() - min);
+
+  let hours = date.getHours();
+  let minutes = date.getMinutes();
+  let ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12;
+  hours = hours ? hours : 12;
+  minutes = minutes < 10 ? '0' + minutes : minutes;
+   return  hours + ':' + minutes + ' ' + ampm
+
+ }
+
+ // this function will retun the differnce between the standup time and alert time in minutes
+ function getAlertTimeinMin(min){
+  
+  const  standupTime = time.value
+  let date1 = new Date("01/01/2000 " + standupTime);
+  let date2 = new Date("01/01/2000 " + min); // alert time
+  let difference = date1 - date2;
+  const minutes =Math.abs(difference / 1000 / 60)
+  return minutes
+  
+ }
+
  
 </script>

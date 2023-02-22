@@ -64,7 +64,7 @@
     <button class="btn bg-red-500 py-2 px-3 text-white mr-4 rounded-sm" @click="configStore.toggleModal">Cancel</button>
     <button v-if="!configStore.loadingSaveTeam&&!configStore.isEditing" class="btn bg-ss-purple py-2 px-3  text-white rounded-sm" @click="handleSaveTeam">Save</button>
     <button v-else-if="!configStore.loadingSaveTeam&&configStore.isEditing" class="btn bg-ss-purple py-2 px-3  text-white rounded-sm" @click="handleEditTeam">Update</button>
-    <button v-else lass="btn bg-ss-purple py-2 px-3  text-white rounded-sm flex item-center justiy-center"><LoaderSpiner/></button>
+    <button v-else class="btn bg-ss-purple py-2 px-3  text-white rounded-sm flex item-center justiy-center"><LoaderSpiner/></button>
     </div>
   </div>
 
