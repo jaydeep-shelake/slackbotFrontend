@@ -95,7 +95,9 @@
           </option>
           
         </select>
-
+       <div v-if="showErr" class="w-full bg-red-500 flex items-center justify-center text-white text-sm p-2 rounded-md my-2">
+         Please Select leave type
+       </div>
         <select
           v-model="substitute"
           type="text"
@@ -178,29 +180,36 @@ const range = ref({
 const substitute = ref("");
 const type = ref("");
 const desc = ref("");
-
+const showErr = ref(false)
  
 
 function submit() {
-  
-   const approverData = members.value.find(item=> item.userId===approverId.value)
-   const substituteData = members.value.find(item => item.userId === substitute.value)
-   const userData = userStore.user
+  if(substitute.value.length >0){
+    showErr.value=false
+    const approverData = members.value.find(item => item.userId === approverId.value)
+    const substituteData = members.value.find(item => item.userId === substitute.value)
+    const userData = userStore.user
 
-  leaveStore.addLeave({
-    dateTo: range.value.end.toISOString(),
-    dateFrom: range.value.start.toISOString(),
-    desc: desc.value,
-    type: type.value,
-    substitute: substitute.value,
-    substituteData,
-    userData,
-    approverData
-  });
-  range.value.start = new Date();
-  range.value.end = new Date();
-  type.value = "";
-  desc.value = "";
+    leaveStore.addLeave({
+      dateTo: range.value.end.toISOString(),
+      dateFrom: range.value.start.toISOString(),
+      desc: desc.value,
+      type: type.value,
+      substitute: substitute.value,
+      substituteData,
+      userData,
+      approverData
+    });
+    range.value.start = new Date();
+    range.value.end = new Date();
+    type.value = "";
+    desc.value = "";
+  }
+  else{
+    showErr.value=true
+  }
+  
+  
 }
 
 
