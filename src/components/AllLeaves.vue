@@ -12,7 +12,7 @@
         <div class="w-full flex items-center justify-between">
           <h2 class="text-2xl text-white">All Leaves</h2>
           <div class="flex items-center justify-center">
-          <button v-if="userStore && userStore.admin" class="ss-btn bg-ss-purple  mr-2" @click="openUserModaL">Apply on behalf of</button>
+          <button v-if="userStore && userStore.user.admin" class="ss-btn bg-ss-purple  mr-2" @click="openUserModaL">Apply on behalf of</button>
           <button class="ss-btn bg-ss-purple">View All</button>
 
           </div>
@@ -71,7 +71,7 @@ import UsersModal from './modals/UsersModal.vue'
 import BehalfModal from './modals/BehalfModal.vue';
 import { storeToRefs } from 'pinia';
 const leavesStore=useLeavesStore()
-const userStore = useUserStore().user
+const userStore = useUserStore()
 const {leaveCount} = storeToRefs(useUserStore())
 const showUserMoal = ref(false)
 const showFormModal = ref(false)

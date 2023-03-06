@@ -46,7 +46,7 @@ export const useUserStore = defineStore("userStore", {
       // login /signin of user
       if (this.user === null) {
         const { data } = await axios.post(
-          "https://superleaves.onrender.com/auth/callback",
+          "http://localhost:5000/auth/callback",
           { code: code }
         );
         const identity = data?.identity;
@@ -86,7 +86,7 @@ export const useUserStore = defineStore("userStore", {
       this.teamLeaves = data;
     },
     async getUsersLeaveCount(){
-      const {data} = await api.get(`/users/${this.user.userId}`)
+      const {data} = await api.get(`/users/user/${this.user.userId}`)
       this.leaveCount=data
     },
     logout() {
