@@ -181,7 +181,9 @@ const substitute = ref("");
 const type = ref("");
 const desc = ref("");
 const showErr = ref(false)
- 
+ if(type.value.length > 0){
+  showErr.value=false
+ }
 
 function submit() {
   if(substitute.value.length >0){
