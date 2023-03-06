@@ -47,6 +47,13 @@
                      <p>{{ leave.approverName }}</p>
                     </div>
                     
+                 <div v-if="leave.substituteId!==null" class="w-[90%] p-4 flex items-center justify-between">
+                    <p>SUBSTITUTE</p>
+                    <div class="flex items-center justify-center">
+                     <img :src="leave.substituteAvatar" alt="" class="w-[40px] h-[40px] rounded-full mr-2">
+                     <p>{{ leave.substituteName}}</p>
+                    </div>
+                    
                 </div>
 
             </div>
