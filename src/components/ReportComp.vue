@@ -1,6 +1,6 @@
 <template>
    <div class="w-[80%] h-full flex items-center justify-start flex-col">
-    <div class="w-[90%] h-auto mt-10 bg-ss-body rounded-lg flex flex-col items-start justify-start px-8 py-6">
+    <div class="w-[90%] h-auto mt-10 bg-ss-body rounded-lg flex flex-col items-start justify-start px-8 py-6 overflow-y-auto ">
     <div class="w-full flex items-center justify-between">
      <p class="text-2xl text-white">Employee Report</p>
      <div class=" flex items-center">
@@ -14,9 +14,9 @@
     </div>
     <div v-if="!loading" class="w-full flex flex-col items-center justify-center mt-10">
      <div class="w-[90%] flex items-center justify-evenly ">
-      <table class="w-full " >
+      <table class="w-full" >
         <thead class="w-full text-white">
-        <tr>
+        <tr class="w-full">
             <th class="py-2">Name</th>
             <th class="py-2" v-for="types in listOfUsers[0].leaveCount" :key="types._id" >{{ types.type }}</th>
             
@@ -70,7 +70,7 @@ const dataRef = ref('')
 watchEffect(async ()=>{
    loading.value=true
    pages.value= new Array(numberOfPages.value).fill(null).map((v,i)=>i)
-   console.log("watch ran ")
+  
    if(selectedTeam.value==='all'){
     const {data} = await api.get(`/users/userlist?page=${pageNumber.value}`)
     dataRef.value=data

@@ -5,7 +5,7 @@
         <form @submit.prevent="handleSubmit" class="w-full flex flex-col h-full items-center justify-between p-4">
             <div class="w-full">
          <input type="text" class="ss-input" placeholder="Holiday Name" v-model="name">
-         <v-date-picker class="inline-block h-full w-full" v-model="date">
+         <v-date-picker is-dark class="inline-block h-full w-full" v-model="date">
     <template v-slot="{ inputValue, togglePopover }">
       <div class="flex items-center">
         <button

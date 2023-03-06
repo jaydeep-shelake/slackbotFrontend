@@ -22,6 +22,7 @@ if(localStorage.getItem("slackUser")!==null){
   soketStore.setupSocketConnection()
 
 leavesStore.fetchLeaves()
+leavesStore.fetchLeavTypes()
 userStore.fetchUserTeam()
 holidayStore.fetchHolidays()
 userStore.fetchTeamLeaves()
@@ -35,6 +36,7 @@ watch(user,()=>{
   soketStore.setupSocketConnection()
   }
 leavesStore.fetchLeaves()
+leavesStore.fetchLeavTypes()
 userStore.fetchUserTeam()
 holidayStore.fetchHolidays()
 userStore.fetchTeamLeaves()

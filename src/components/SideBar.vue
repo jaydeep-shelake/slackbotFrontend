@@ -2,7 +2,7 @@
     <div class="w-[15%] h-screen bg-ss-dark p-2 flex items-center justify-start flex-col">
     
       <div class="link-item">
-        <router-link to="/" class="link-item-a">Dashboard</router-link>
+        <router-link :to="{name:'HomePage'}" class="link-item-a">Dashboard</router-link>
       </div>
       <div class="link-item">
         <router-link :to="{name:'RequestPage'}" class="link-item-a">Requests</router-link>
@@ -13,13 +13,11 @@
       <div class="link-item">
         <router-link :to="{name:'CalendarPage'}" class="link-item-a">Calendar</router-link>
       </div>
-      <div class="link-item">
-        <router-link to="/setting" class="link-item-a">Setting</router-link>
-      </div>
-      <div class="link-item">
+      <div class="link-item"  v-if="userStore.user && userStore.user.admin">
         <router-link :to="{name:'ReportPage'}" class="link-item-a">Report</router-link>
       </div>
-      <div class="link-item">
+ 
+      <div class="link-item" v-if="userStore.user && userStore.user.admin">
         <router-link :to="{name:'ConfigrationPage'}" class="link-item-a">Configration</router-link>
       </div>
       <div class="link-item">
@@ -36,5 +34,7 @@
 </style>
 <script setup>
 import { useRequestStore } from '@/store/requestStore';
+import { useUserStore } from '@/store/userStore';
 const requestStore = useRequestStore()
+const userStore  = useUserStore()
 </script>

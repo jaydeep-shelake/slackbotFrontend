@@ -4,7 +4,11 @@
     <div class="w-[90%] h-[85%] mt-10 bg-ss-body rounded-lg flex flex-col items-start justify-start px-8 py-6">
         <div class="w-full flex items-center justify-between">
          <h2 class="text-2xl text-white">Requests</h2>
-          <button class="ss-btn bg-ss-purple">View All</button>
+         <div>
+
+           <router-link :to="{name:'allRequests'}" v-if="userStore.user && userStore.user.admin"><button class="ss-btn bg-ss-purple mr-2">All Request</button></router-link>
+           <button class="ss-btn bg-ss-purple">View All</button>
+         </div>
         </div>
         <div  v-if="requestStore.allRequest.length>0"  class="w-full h-full mt-8">
             <div  v-for="request in requestStore.allRequest" :key="request._id" class="w-full p-5 bg-primary-gradient flex flex-col items-center justify-evenly text-white my-4">
@@ -46,9 +50,11 @@
 
 <script setup>
 import { useRequestStore } from '@/store/requestStore';
+import { useUserStore } from '@/store/userStore';
 import { onMounted } from '@vue/runtime-core';
 import LoaderSpiner from './LoaderSpiner.vue';
 const requestStore = useRequestStore()
+const userStore= useUserStore()
 function handleApproveRequest(data){
 requestStore.approveRequest(data)
 }

@@ -9,6 +9,13 @@ export const useHolidayStore= defineStore("holidayStore",{
          openHolidayModal:false
         }
     },
+    getters:{
+      getFutureHoliday(){
+        const currentDate= new Date()
+        console.log(this.allHolidays.filter((item)=>item.date > currentDate.toISOString()))
+        return this.allHolidays.filter((item)=>item.date > currentDate.toISOString())
+      }
+    },
     actions:{
      async fetchHolidays(){
         const {data} = await api.get('/holiday')

@@ -1,5 +1,5 @@
 <template>
-  <div @click="configStore.toggleUserModal" class="w-screen h-screen bg-modal-transparent fixed top-0 left-0 flex items-center justify-center z-[99]">
+  <div @click="handleClose" class="w-screen h-screen bg-modal-transparent fixed top-0 left-0 flex items-center justify-center z-[99]">
 
    <div v-if="searchedUesrs.length<=0" @click.stop class="bg-ss-gray p-6 w-1/2 h-[60%] flex flex-col items-start justify-start cursor-pointer ">
     
@@ -12,7 +12,7 @@
     <div v-if="loading" class="w-full mt-8  text-xs flex items-center justify-center flex-wrap h-[300px] overflow-y-auto">
       <LoaderSpiner/>
     </div>
-    <div v-else class="w-full mt-8  text-xs flex items-center justify-center flex-wrap h-[300px] overflow-y-auto">
+    <div v-else class="w-full mt-8  text-xs flex items-center justify-center flex-wrap h-[80%] overflow-y-auto">
     
     <div v-for="user in listOfUsers" :key="user._id" @click="selectUser(user)" class=" flex flex-col items-center justify-between py-3 text-white  p-3 m-4 w-[150px]  h-auto" :class="{'bg-secondary-gradient':selectedUsers.includes(user)}">
        <div class="flex flex-col items-center justify-center">
@@ -38,7 +38,7 @@
    </div>
 
 
-   <div v-else  @click.stop class="bg-ss-gray p-6 w-1/2 h-[60%] flex  items-start justify-start flex-col cursor-pointer ">
+   <div v-else  @click.stop class="bg-ss-gray p-6 w-1/2 h-[80%] flex  items-start justify-start flex-col cursor-pointer ">
    <div class="w-full flex items-center justify-between">
       <div class="text-md text-ss-blue">
         <span class="text-white"> Result for : </span> {{ name }}
@@ -74,7 +74,7 @@
 <script setup>
 import { useConfigStore } from '@/store/configStore';
 import {  ref,watchEffect } from '@vue/runtime-core';
-import { defineEmits } from 'vue';
+import { defineEmits,defineProps } from 'vue';
 import LoaderSpiner from '../LoaderSpiner.vue';
 import api from '@/api/api';
 const configStore = useConfigStore()
@@ -88,6 +88,14 @@ const selectedUsers=ref([])
 const name= ref('')
 const searchedUesrs =ref([])
 const searchUserLoading= ref(false)
+
+const props  = defineProps({
+   applyOnBehalf:{
+      type:Boolean,
+      default:false,
+   }
+})
+
 watchEffect(async ()=>{
    loading.value=true
    pages.value= new Array(numberOfPages.value).fill(null).map((v,i)=>i)
@@ -124,6 +132,9 @@ function setPageNumber(index){
 }
 
 function selectUser(user){
+    if(props.applyOnBehalf){
+      emit('sendSelectedUsers',user)
+    }
    if(selectedUsers.value.includes(user)){
       console.log("user exits")
       selectedUsers.value= selectedUsers.value.filter((item)=>item._id!==user._id)
@@ -131,14 +142,17 @@ function selectUser(user){
       return
    }
   selectedUsers.value=[...selectedUsers.value,user]
-  console.log(selectedUsers.value)
+  
 }
-const emit = defineEmits(['sendSelectedUsers']);
+const emit = defineEmits(['sendSelectedUsers','closeModal']);
 function addUsersToTeam(){
 if(selectedUsers.value.length>0){
    configStore.saveUsersToTeam(selectedUsers.value)
    emit('sendSelectedUsers',selectedUsers.value)
 }
 }
-
+function handleClose(){
+   configStore.toggleUserModal()
+   emit('closeModal')
+}
 </script>

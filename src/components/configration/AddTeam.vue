@@ -10,21 +10,21 @@
         </div>
         <div v-else class="w-full h-full mt-8">
             <div v-for="team in configStore.allTeams" :key="team._id" class="w-full bg-black flex items-center justify-evenly p-4 text-white cursor-pointer my-4"  @click="router.push(`/configration/teams/${team.name}`)">
-             <div>
-                <p >{{ team.name }} Team</p>
+             <div class="w-[20%]">
+                <p >{{ team.name }}</p>
              </div>
-             <div>
+             <div class="w-[20%]" >
                 <p> <span class="text-ss-light-purple">{{ team.members.length }}</span> Members</p>
              </div>
-             <div>
+             <div class="w-[20%]" >
                 <p> <span class="text-ss-purple">{{ team.approvers.length}}</span> Lead</p>
              </div>
-             <div>
+             <div  class="w-[20%]">
                 <button class="btn bg-red-500 text-sm py-1 px-3 rounded-sm"
                 @click.stop="handleDeleteTeam(team._id)"
                 >Delete</button>
              </div>
-             <div>
+             <div  class="w-[20%]">
                 <button class="btn bg-green-500 text-sm py-1 px-3 rounded-sm" @click.stop="editHandleTeam(team)" >Edit</button>
              </div>
              

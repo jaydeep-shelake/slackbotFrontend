@@ -15,6 +15,11 @@ module.exports = {
          'ss-black':'#1F1826',
          'ss-form':'#1E1E1E',
          'ss-alpha-purple':'#7f3cdd4e',
+         'neutral-5': '#1C1B1F',
+         'approved':'#57a99a6c',
+         'rejected':'#bf282884',
+         'pending':'#dbc32984',
+         'neutral-10': '#1C1B1F',
       },
       fontFamily:{
         poppins:['Poppins','Oswald','Open+Sans']

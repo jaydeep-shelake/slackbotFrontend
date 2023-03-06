@@ -73,11 +73,11 @@ export const useUserStore = defineStore("userStore", {
       const { data } = await api.get(
         `/team?slackId=${this.userDetails.slackId}`
       );
-      this.team = data[0].name;
-      this.approver = data[0].approvers[0].name;
+      this.team = data.name;
+      this.approver = data.approvers[0].name;
       this.fetchTeamLeaves();
-      this.members = data[0].members;
-      this.approverId = data[0].approvers[0].userId;
+      this.members = data.members;
+      this.approverId = data.approvers[0].userId;
     },
 
     async fetchTeamLeaves() {
