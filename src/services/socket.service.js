@@ -5,7 +5,7 @@ class SocketioService {
     constructor() {}
   
     setupSocketConnection() {
-      this.socket = io('http://localhost:5000',{
+      this.socket = io('https://superleaves.onrender.com',{
         auth:{
             token:JSON.parse(localStorage.getItem('slackUser')).token,
             slackId:JSON.parse(localStorage.getItem('slackUser')).user.id

@@ -46,7 +46,7 @@ export const useUserStore = defineStore("userStore", {
       // login /signin of user
       if (this.user === null) {
         const { data } = await axios.post(
-          "http://localhost:5000/auth/callback",
+          "https://superleaves.onrender.com/auth/callback",
           { code: code }
         );
         const identity = data?.identity;
