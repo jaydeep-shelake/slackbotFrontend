@@ -26,7 +26,6 @@ leavesStore.fetchLeavTypes()
 userStore.fetchUserTeam()
 holidayStore.fetchHolidays()
 userStore.fetchTeamLeaves()
-userStore.getUsersLeaveCount()
 standupStore.fetchStandups()
 }
 // 
@@ -42,7 +41,7 @@ userStore.fetchUserTeam()
 holidayStore.fetchHolidays()
 userStore.fetchTeamLeaves()
 standupStore.fetchStandups()
-userStore.getUsersLeaveCount()
+
 })
 
 

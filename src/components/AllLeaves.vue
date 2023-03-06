@@ -65,7 +65,7 @@
 import api from '@/api/api';
 import { useLeavesStore } from '@/store/leavesStore';
 import { useUserStore } from '@/store/userStore';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import LoaderSpiner from './LoaderSpiner.vue';
 import UsersModal from './modals/UsersModal.vue'
 import BehalfModal from './modals/BehalfModal.vue';
@@ -94,5 +94,9 @@ async function getSelectedUser(user){
   showUserMoal.value=false
   showFormModal.value=true
 }
+
+onMounted(()=>{
+  userStore.getUsersLeaveCount()
+})
 </script>
 
