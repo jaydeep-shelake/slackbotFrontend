@@ -161,7 +161,7 @@
   </div>
 </template>
 <script setup>
-import {  ref } from "vue";
+import {  ref, watch } from "vue";
 import { storeToRefs } from "pinia";
 import { useLeavesStore } from "@/store/leavesStore";
 import { useUserStore } from "@/store/userStore";
@@ -181,9 +181,12 @@ const substitute = ref("");
 const type = ref("");
 const desc = ref("");
 const showErr = ref(false)
- if(type.value.length > 0){
-  showErr.value=false
- }
+watch(type,()=>{
+  if (type.value.length > 0) {
+    showErr.value = false
+  }
+})
+ 
 
 function submit() {
   if(substitute.value.length >0){
