@@ -86,7 +86,7 @@ export const useUserStore = defineStore("userStore", {
       this.teamLeaves = data;
     },
     async getUsersLeaveCount(){
-      const {data} = await api.get(`/users/${this.userDetails.slackId}`)
+      const {data} = await api.get(`/users/${this.user.userId}`)
       this.leaveCount=data
     },
     logout() {
