@@ -3,9 +3,9 @@
     <div class="w-[60%] h-full flex items-center justify-start flex-col">
     <div class="w-[90%] h-[85%] mt-10 bg-ss-body rounded-lg flex flex-col items-start justify-start px-8 py-6">
       <div class="flex items-center justify-evenly w-full mb-10">
-      <div v-for="user in userStore.leaveCount" :key="user._id" class="p-2 w-[140px] h-[140px] max-w-auto  bg-ss-gray flex flex-col items-center justify-evenly rounded-md mx-2 ">
-        <h1 class="text-ss-purple text-5xl">{{ user.count }}</h1>
-         <p class="text-gray-300 text-center w-full capitalize">{{ user.type }}</p>
+      <div v-for="leaveType in leaveCount " :key="leaveType._id" class="p-2 w-[140px] h-[140px] max-w-auto  bg-ss-gray flex flex-col items-center justify-evenly rounded-md mx-2 ">
+        <h1 class="text-ss-purple text-5xl">{{ leaveType.count }}</h1>
+         <p class="text-gray-300 text-center w-full capitalize">{{ leaveType.type }}</p>
       </div>
       
       </div>
@@ -69,8 +69,10 @@ import { ref } from 'vue';
 import LoaderSpiner from './LoaderSpiner.vue';
 import UsersModal from './modals/UsersModal.vue'
 import BehalfModal from './modals/BehalfModal.vue';
+import { storeToRefs } from 'pinia';
 const leavesStore=useLeavesStore()
 const userStore = useUserStore().user
+const {leaveCount} = storeToRefs(useUserStore())
 const showUserMoal = ref(false)
 const showFormModal = ref(false)
 const userData  = ref({})

@@ -16,17 +16,6 @@ export const useLeavesStore= defineStore("leavesStore",{
           
         }
     },
-    getters:{
-    getEarnedLeaves(){
-        return 15 - this.allLeaves.filter(item=>item.type==="earned leaves"&&item.approved).length
-    },
-    getSickLeaves(){
-        return 12 - this.allLeaves.filter(leave=>leave.type==='sick'&&leave.approved).length
-    },
-    getFestiveLeaves(){
-        return 5- this.allLeaves.filter(leave=>leave.type==="festive"&&leave.approved).length
-    }
-    },
     actions:{
         async fetchLeaves(){
            

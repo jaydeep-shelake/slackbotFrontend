@@ -14,6 +14,7 @@ export const useUserStore = defineStore("userStore", {
       approver: "",
       approverId: "",
       members: [],
+      leaveCount:[]
     };
   },
   getters: {
@@ -65,7 +66,6 @@ export const useUserStore = defineStore("userStore", {
           })
         );
         console.log("localstorage is set");
-        this.fetchUser();
         this.router.push("/");
       }
     },
@@ -84,6 +84,10 @@ export const useUserStore = defineStore("userStore", {
       console.log("entered in team leaves");
       const { data } = await api.get(`/leaves?team=${this.team}`); // dynamic value for team
       this.teamLeaves = data;
+    },
+    async getUsersLeaveCount(){
+      const {data} = await api.get(`/users/${this.userDetails.slackId}`)
+      this.leaveCount=data
     },
     logout() {
       localStorage.removeItem("slackUser");
