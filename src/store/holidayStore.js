@@ -12,7 +12,6 @@ export const useHolidayStore= defineStore("holidayStore",{
     getters:{
       getFutureHoliday(){
         const currentDate= new Date()
-        console.log(this.allHolidays.filter((item)=>item.date > currentDate.toISOString()))
         return this.allHolidays.filter((item)=>item.date > currentDate.toISOString())
       }
     },

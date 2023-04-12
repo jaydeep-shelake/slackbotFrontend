@@ -14,7 +14,7 @@ export const useSoketStore = defineStore("soketStore", {
       const requestStore = useRequestStore();
       console.log("entered socket");
 
-      this.socket = io("https://superleaves.onrender.com", {
+      this.socket = io("https://bot.staging.ssup.co", {
         auth: {
           token: JSON.parse(localStorage.getItem("slackUser")).token,
           slackId: JSON.parse(localStorage.getItem("slackUser")).user.id,

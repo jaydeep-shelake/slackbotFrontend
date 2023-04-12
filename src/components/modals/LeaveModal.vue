@@ -1,5 +1,5 @@
 <template>
-    <div @click="closeModal" class="w-screen h-screen fixed top-0 left-0 flex items-center justify-end">
+    <div @click="closeModal" class="w-screen h-screen fixed top-0 left-0 flex items-center justify-end z-50">
           
         <div @click.stop class="w-[600px] p-10 h-screen  bg-ss-gray flex flex-col  items-center justify-start">
             <div  v-if="loading" class="w-full h-full flex items-center justify-center">
@@ -25,7 +25,10 @@
                 <img :src="leave.userAvatar" alt="" class="w-[80px] h-[80px] rounded-full mr-6">
              </div>
                 <div class="flex flex-col items-start justify-center">
-                    <p class="text-xs p-1 rounded-md bg-approved">{{ leave.type }}</p>
+                  <span v-if="leave.approved && !leave.canceled" class="text-xs p-1 rounded-md bg-approved" >APPROVED</span>
+                  <span v-if="leave.rejected" class="text-xs p-1 rounded-md bg-rejected" >REJECTED</span>
+                  <span v-if="leave.canceled" class="text-xs p-1 rounded-md bg-rejected" >CANCELED</span>
+                  <span v-if="!leave.approved && !leave.rejected && !leave.canceled" class="text-xs p-1 rounded-md bg-pending" >PENDING</span>
                     <p class="text-l my-1">{{ leave.name }}</p>
                     <p class="text-sm text-gray-500">{{ leave.type }}</p>
                 </div>

@@ -1,7 +1,7 @@
 
 <template>
     <div class="w-[60%] h-full flex items-center justify-start flex-col">
-    <div class="w-[90%] h-[85%] mt-10 bg-ss-body rounded-lg flex flex-col items-start justify-start px-8 py-6">
+    <div class="w-[90%] h-[85%] mt-[70px] bg-ss-body rounded-lg flex flex-col items-start justify-start px-8 py-6">
         <div class="w-full flex items-center justify-between">
          <h2 class="text-2xl text-white">Requests</h2>
          <div>
@@ -31,11 +31,11 @@
               </div>
               <div class="flex items-start justify-start  w-full mt-4">
                 <button v-if="!requestStore.laoding" class="ss-btn bg-ss-purple text-sm mr-2" @click="handleApproveRequest({userId:request.userId
-,approver:request.approverId,teamId:request.teamId,messageTs:request.messageTs,approved:true,_id:request._id,type:request.type})">Approve</button>
+,approver:request.approverId,teamId:request.teamId,messageTs:request.messageTs,approved:true,_id:request._id,type:request.type, rejected: false})">Approve</button>
                 <button v-else class="ss-btn bg-ss-purple text-sm mr-2 flex items-center justify-center" ><LoaderSpiner/></button>
 
                 <button class="ss-btn bg-ss-purple text-sm" @click="handleApproveRequest({userId:request.userId
-,approver:request.approverId,teamId:request.teamId,messageTs:request.messageTs,approved:false})">Reject</button>
+,approver:request.approverId,teamId:request.teamId,messageTs:request.messageTs,approved:false, rejected:true})">Reject</button>
               </div>
             </div>
         </div>
@@ -45,20 +45,20 @@
 
     </div>
    </div>
-  
+
 </template>
 
 <script setup>
 import { useRequestStore } from '@/store/requestStore';
 import { useUserStore } from '@/store/userStore';
-import { onMounted } from '@vue/runtime-core';
+import { onMounted} from 'vue';
 import LoaderSpiner from './LoaderSpiner.vue';
 const requestStore = useRequestStore()
 const userStore= useUserStore()
+
 function handleApproveRequest(data){
 requestStore.approveRequest(data)
 }
-
 
 onMounted(()=>{
     requestStore.getRequest()

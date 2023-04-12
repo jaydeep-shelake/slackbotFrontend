@@ -1,6 +1,6 @@
 <template>
     <NavBar/>
-    <main class="w-full h-screen bg-ss-dark flex items-start justify-start mt-[70px]">
+    <main class="w-full h-screen bg-ss-dark flex items-start justify-end">
      <SideBar/>
     <AllRequest/>
     <LeaveForm/>

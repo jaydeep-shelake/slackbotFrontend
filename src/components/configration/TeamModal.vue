@@ -1,6 +1,6 @@
 <template>
-    <div @click="configStore.toggleModal" class="w-screen h-screen bg-modal-transparent fixed top-0 right-0 flex items-center justify-end">
-  <div @click.stop class="w-[600px] py-5 pl-0 pr-5 h-screen  bg-ss-gray flex  items-center justify-between">
+    <div @click="configStore.toggleModal" class="w-screen h-screen bg-modal-transparent fixed top-0 right-0 flex items-center justify-end z-10">
+  <div @click.stop class="w-[600px] py-5 pl-0 pr-5 h-screen  bg-ss-gray flex  items-center justify-between ">
     <div class="w-[10%] flex flex-col items-center justify-start h-full mr-2">
      <div class="w-full cursor-pointer p-1 flex items-center justify-center my-2 mt-3 rounded-r-xl" @click="handleShowMember"
      :class="{'bg-ss-purple':showMembers}"
@@ -20,7 +20,7 @@
    </div>
 
    <div v-if="showMembers">
-    <div  class="add-frame w-full  flex flex-col " @click="configStore.toggleUserModal" :class="{'mt-10':configStore.listOfTeam.length<=0}"> 
+    <div  class="add-frame w-full  flex flex-col " @click="configStore.toggleUserModal(true)" :class="{'mt-10':configStore.listOfTeam.length<=0}"> 
     <img v-if="configStore.listOfTeam.length<=0" class="w-[40px] h-[40px]" src="https://res.cloudinary.com/qtalk/image/upload/v1674037089/SuperLeaves/Plus_ttu9ws.svg"/>
      <p class="4xl text-white">Add Members</p>
     </div>

@@ -30,7 +30,7 @@
                </td>
         
                <td>
-                <span v-if="leave.approved" class="text-xs p-1 rounded-md bg-approved" >APPROVED</span>
+                <span v-if="leave.approved&& !leave.canceled" class="text-xs p-1 rounded-md bg-approved" >APPROVED</span>
                 <span v-if="leave.rejected " class="text-xs p-1 rounded-md bg-rejected" >REJECTED</span>
                 <span v-if="leave.canceled" class="text-xs p-1 rounded-md bg-rejected" >CANCELED</span>
                 <span v-if="!leave.approved && !leave.rejected && !leave.canceled" class="text-xs p-1 rounded-md bg-pending" >PENDING</span>
@@ -50,7 +50,7 @@
       </div>
 
     </div>
-  <PaginationComp url="/leaves/allLeavesReq" @send-page-data="getPageData"/>
+  <PaginationComp url="/leaves/allLeavesReq" @send-page-data="getPageData" @loading="setLoading"/>
  </div>
   <LeaveModal v-if="showModal" @close-modal="handleClose" :leaveId="currentLeaveId"/>
 </template>
@@ -77,7 +77,10 @@ function handleClose(){
 }
 function getPageData(data){
      leaves.value=data.data.data
-     loading.value= data.loading
+}
+
+const setLoading = (boolean)=>{
+ loading.value=boolean
 }
 </script>
 

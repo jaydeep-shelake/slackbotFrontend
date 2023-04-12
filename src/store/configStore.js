@@ -39,8 +39,8 @@ export const useConfigStore = defineStore('configStore',{
             this.listOfLead=[],
             this.listOfTeam=[]
         },
-        toggleUserModal(){
-            this.userModalOpen=!this.userModalOpen
+        toggleUserModal(value){
+            this.userModalOpen=value
         },
         toggleLeadModal(){
           this.leadModalOpen = !this.leadModalOpen

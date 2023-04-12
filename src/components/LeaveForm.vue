@@ -1,12 +1,12 @@
 <template>
   <div
-    class="w-[25%] h-full bg-ss-dark flex flex-col items-center justify-start"
+    class="w-[25%] h-full bg-ss-dark flex flex-col items-center justify-start mt-[50px]"
   >
     <div class="w-[95%] h-[90%] flex items-center justify-start flex-col">
       <form
         @submit.prevent="submit"
         p
-        class="bg-primary-gradient border rounded-md border-ss-light-purple p-6 flex flex-col items-center justify-sta mt-8 w-full"
+        class="bg-[#1c1b1f]   rounded-md p-6 flex flex-col items-center justify-sta mt-8 w-full"
       >
         <v-date-picker
           v-model="range"
@@ -14,12 +14,13 @@
           is-range
           is-dark
           color="purple"
+          :min-date="range.start"
         >
           <template v-slot="{ inputValue, inputEvents }">
             <div class="flex flex-col sm:flex-row justify-start items-center">
               <div class="relative flex-grow">
                 <svg
-                  class="text-gray-600 w-4 h-full mx-2 absolute pointer-events-none"
+                  class="text-white w-4 h-full mx-2 absolute pointer-events-none"
                   fill="none"
                   stroke-linecap="round"
                   stroke-linejoin="round"
@@ -32,14 +33,14 @@
                   ></path>
                 </svg>
                 <input
-                  class="flex-grow pl-8 pr-2 py-2 bg-black rounded w-full text-ss-purple"
+                  class="flex-grow pl-8 pr-2 py-2 bg-black rounded w-full text-white"
                   :value="inputValue.start"
                   v-on="inputEvents.start"
                 />
               </div>
               <span class="flex-shrink-0 m-2">
                 <svg
-                  class="w-4 h-4 stroke-current text-gray-600"
+                  class="w-4 h-4 stroke-current text-white"
                   viewBox="0 0 24 24"
                 >
                   <path
@@ -52,7 +53,7 @@
               </span>
               <div class="relative flex-grow">
                 <svg
-                  class="text-gray-600 w-4 h-full mx-2 absolute pointer-events-none"
+                  class="text-white w-4 h-full mx-2 absolute pointer-events-none"
                   fill="none"
                   stroke-linecap="round"
                   stroke-linejoin="round"
@@ -65,7 +66,7 @@
                   ></path>
                 </svg>
                 <input
-                  class="bg-black flex-grow pl-8 pr-2 py-2 rounded w-full text-ss-purple"
+                  class="bg-black flex-grow pl-8 pr-2 py-2 rounded w-full text-white"
                   :value="inputValue.end"
                   v-on="inputEvents.end"
                 />
@@ -73,11 +74,10 @@
             </div>
           </template>
         </v-date-picker>
-        <input class="ss-input" type="text" :value="approver" disabled />
         <select
           v-model="type"
           type="text"
-          class="ss-input"
+          class="ss-input text-white"
           placeholder="Enter Type"
         >
           <option
@@ -91,17 +91,15 @@
             class="text-white bg-black border-none outline-none w-full"
             v-for="leaveType in leaveStore.leaveTypes" :key="leaveType"
           >
-            {{ leaveType }}
+            {{ makeCapitalize(leaveType) }}
           </option>
           
         </select>
-       <div v-if="showErr" class="w-full bg-red-500 flex items-center justify-center text-white text-sm p-2 rounded-md my-2">
-         Please Select leave type
-       </div>
+       
         <select
           v-model="substitute"
           type="text"
-          class="ss-input"
+          class="ss-input text-white"
           placeholder="Substitute"
         >
           <option
@@ -119,7 +117,7 @@
           </option>
         </select>
         <div class="w-full flex flex-col items-start justify-start">
-          <label class="text-ss-purple" for="reason ">Reason</label>
+          <label class="text-white" for="reason ">Reason</label>
           <textarea
             v-model="desc"
             name="reason"
@@ -134,6 +132,9 @@
         >
           <LoaderSpiner />
         </button>
+        <div v-if="showErr" class="w-full bg-red-500 flex items-center justify-center text-white text-sm p-2 rounded-md my-2">
+           Please select correct fromat
+         </div>
         <button v-else class="ss-btn bg-ss-purple mt-4 w-full" type="submit">
           Submit
         </button>
@@ -161,17 +162,19 @@
   </div>
 </template>
 <script setup>
-import {  ref, watch } from "vue";
+import {  onMounted, ref, watch } from "vue";
 import { storeToRefs } from "pinia";
 import { useLeavesStore } from "@/store/leavesStore";
 import { useUserStore } from "@/store/userStore";
 import LoaderSpiner from "./LoaderSpiner.vue";
 import { useHolidayStore } from "@/store/holidayStore";
+import { makeCapitalize } from "@/helpers/helpers";
+import {compairDates} from "@/helpers/helpers"
 const holidayStore = useHolidayStore();
 const { getFutureHoliday } = storeToRefs(holidayStore)
 const leaveStore = useLeavesStore();
 const userStore = useUserStore();
-const { approver, members, approverId } = storeToRefs(userStore);
+const {  members, approverId } = storeToRefs(userStore);
 const range = ref({
   start: new Date(),
   end: new Date(),
@@ -189,15 +192,15 @@ watch(type,()=>{
  
 
 function submit() {
-  if(substitute.value.length >0){
+  if(substitute.value.length >0 && range.value.start < range.value.end ){
     showErr.value=false
     const approverData = members.value.find(item => item.userId === approverId.value)
     const substituteData = members.value.find(item => item.userId === substitute.value)
     const userData = userStore.user
 
     leaveStore.addLeave({
-      dateTo: range.value.end.toISOString(),
-      dateFrom: range.value.start.toISOString(),
+      dateTo: compairDates(range.value.end),
+      dateFrom: compairDates(range.value.start),
       desc: desc.value,
       type: type.value,
       substitute: substitute.value,
@@ -213,9 +216,10 @@ function submit() {
   else{
     showErr.value=true
   }
-  
-  
+   
 }
 
-
+onMounted(()=>{
+  leaveStore.fetchLeavTypes()
+})
 </script>

@@ -1,9 +1,9 @@
 <template>
-  <div class="w-[80%] h-full flex items-center justify-start flex-col">
+  <div class="w-[80%] h-full flex items-center justify-start flex-col mt-10">
     <div class="w-[90%] h-auto mt-10 bg-ss-body rounded-lg flex flex-col items-start justify-start px-8 py-6">
   <div class="w-full flex items-center justify-between">
      <p class="text-2xl text-white">Standup's</p>
-     <button class="ss-btn bg-ss-purple">Create Standup</button>
+    <router-link :to="{name:'CreateStandup'}"> <button class="ss-btn bg-ss-purple" >Create Standup</button></router-link>
   </div>
   <div v-if="standupStore.loading" class="w-full flex flex-col items-center justify-center mt-6">
     <LoaderSpiner/>
@@ -43,12 +43,18 @@
   </div>
 </div>
 </div>
-
+<UsersModal v-if="showUserModal" @close-modal="handleClose"/>
 </template>
 
 <script setup>
 import { useStandupStore } from '@/store/standupStore'; 
+import { onMounted, ref } from 'vue';
 import LoaderSpiner from './LoaderSpiner.vue';
+import UsersModal from './modals/UsersModal.vue';
 const standupStore = useStandupStore()
+const showUserModal = ref(false)
+onMounted(()=>{
+     standupStore.fetchStandups()
+})
 </script>
 

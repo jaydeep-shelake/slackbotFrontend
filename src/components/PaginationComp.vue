@@ -25,7 +25,7 @@ const props= defineProps({
     }
 })
 
-const emits  = defineEmits(['sendPageData'])
+const emits  = defineEmits(['sendPageData','loading'])
 function goToNextPage() {
     pageNumber.value = Math.min(numberOfPages.value - 1, pageNumber.value + 1)
 }
@@ -37,13 +37,15 @@ function setPageNumber(index) {
 }
 watchEffect(async () => {
     loading.value= true
+     emits('loading', true)
     pages.value = new Array(numberOfPages.value).fill(null).map((v, i) => i)
     const { data } = await api.get(`${props.url}?page=${pageNumber.value}`)
     loading.value=false
     dataRef.value = data
     numberOfPages.value = data.totalPages
     totalCount.value=  data.total
-    emits('sendPageData',{data,loading:loading.value})
+    emits('sendPageData',{data})
+    emits('loading',false)
 
 })
 </script>

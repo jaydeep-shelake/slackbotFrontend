@@ -1,5 +1,4 @@
 import { defineStore } from "pinia";
-
 import axios from "axios";
 import api from "@/api/api";
 
@@ -46,7 +45,7 @@ export const useUserStore = defineStore("userStore", {
       // login /signin of user
       if (this.user === null) {
         const { data } = await axios.post(
-          "https://superleaves.onrender.com/auth/callback",
+          "https://bot.staging.ssup.co/auth/callback",
           { code: code }
         );
         const identity = data?.identity;
@@ -80,10 +79,16 @@ export const useUserStore = defineStore("userStore", {
       this.approverId = data.approvers[0].userId;
     },
 
-    async fetchTeamLeaves() {
-      console.log("entered in team leaves");
-      const { data } = await api.get(`/leaves?team=${this.team}`); // dynamic value for team
-      this.teamLeaves = data;
+    async fetchTeamLeaves(teamName) {
+      if(teamName){
+        const { data } = await api.get(`/leaves?team=${teamName}`); // dynamic value for team
+        this.teamLeaves = data;
+
+      }
+      else{
+        const { data } = await api.get(`/leaves?team=${this.team}`); // dynamic value for team
+        this.teamLeaves = data;
+      }
     },
     async getUsersLeaveCount(){
       const {data} = await api.get(`/users/user/${this.user.userId}`)

@@ -20,6 +20,7 @@ module.exports = {
          'rejected':'#bf282884',
          'pending':'#dbc32984',
          'neutral-10': '#1C1B1F',
+         
       },
       fontFamily:{
         poppins:['Poppins','Oswald','Open+Sans']

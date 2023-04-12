@@ -136,10 +136,8 @@ function selectUser(user){
       emit('sendSelectedUsers',user)
     }
    if(selectedUsers.value.includes(user)){
-      console.log("user exits")
-      selectedUsers.value= selectedUsers.value.filter((item)=>item._id!==user._id)
-      console.log(selectedUsers.value)
-      return
+      selectedUsers.value= selectedUsers.value.filter((item)=>item.userId !==user.userId)
+      
    }
   selectedUsers.value=[...selectedUsers.value,user]
   
@@ -149,10 +147,11 @@ function addUsersToTeam(){
 if(selectedUsers.value.length>0){
    configStore.saveUsersToTeam(selectedUsers.value)
    emit('sendSelectedUsers',selectedUsers.value)
+   emit('closeModal')
 }
 }
 function handleClose(){
-   configStore.toggleUserModal()
+   configStore.toggleUserModal(false)
    emit('closeModal')
 }
 </script>

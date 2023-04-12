@@ -14,6 +14,9 @@ import LeaveTypes from "@/pages/configration/LeaveTypes.vue"
 import AllHolidays from "@/pages/configration/AllHolidays.vue"
 import RolesPage from "@/pages/RolesPage.vue"
 import { useUserStore } from "@/store/userStore";
+import CreateStandup from "@/pages/CreateStandup.vue"
+import EmployeePage from "@/pages/configration/EmployeePage.vue"
+import Test from "@/pages/VortexAnimation.vue"
 const routes = [
   {
     name: "HomePage",
@@ -121,6 +124,14 @@ const routes = [
    }
   },
   {
+    name: "CreateStandup",
+    path: "/standup/create",
+    component: CreateStandup,
+    meta:{
+     isAuth:true
+   }
+  },
+  {
     name: "SingleStandupPage",
     path: "/standups/:id",
     component: SingleStandup,
@@ -136,6 +147,16 @@ const routes = [
       isAdmin:true,
        isAuth:true
     }
+  },
+  {
+    name:"test",
+    path:"/test",
+    component:Test,
+  },
+  {
+   name:'EmployeePage',
+   path:'/employees',
+   component:EmployeePage
   }
 ];
 

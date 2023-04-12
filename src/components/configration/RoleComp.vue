@@ -1,6 +1,6 @@
 <template>
-   <div class="w-[70%] h-full flex items-center justify-start flex-col">
-        <div class="w-[90%] h-[85%] mt-10 bg-ss-body rounded-lg flex flex-col items-start justify-start px-8 py-6">
+   <div class="w-[85%] h-full flex items-center justify-start flex-col">
+        <div class="w-[100%] h-[85%] mt-10 bg-ss-body rounded-lg flex flex-col items-start justify-start px-8 py-6">
             <div class="w-full flex items-center justify-between">
              <h2 class="text-2xl text-white">Roles</h2>'
             <button class="ss-btn bg-ss-purple" @click="showUserModal=true">Add Admin</button>
@@ -16,7 +16,7 @@
                      </div>
                   </div>
                 </div>  
-                <div class="w-[60%] text-white">
+                <div class="w-[70%] text-white">
                   <div class="w-full flex items-center justify-between p-2">
                     <div>PERSON</div>
                     <div>ROLE</div>

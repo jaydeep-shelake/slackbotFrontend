@@ -1,8 +1,13 @@
 <template>
-   <div class="w-[80%] h-full flex items-center justify-start flex-col">
-    <div class="w-full h-[85%]  bg-ss-body rounded-lg flex flex-col items-start justify-start px-8 py-6">
-    <div>
+   <div class="w-[80%] h-full flex items-center justify-start flex-col pl-10">
+    <div class="w-full h-[85%]  bg-ss-body rounded-lg flex flex-col items-start justify-start px-8 py-6 mt-16">
+    <div class="w-full flex items-center justify-between">
       <p class="text-white text-2xl ">Absence calendar</p>
+      <select v-if="userStore.user && userStore.user.admin" class="border border-ss-purple bg-ss-dark rounded-md text-white p-2 bg-b
+      outline-none mr-2" name="team" id="team" v-model="selectedTeam">
+        <option value="all" class="text-white"> Select Team </option>
+      <option v-for="team in configStore.allTeams" :key="team._id" :value="team.name">{{ team.name }}</option>
+     </select>
     </div>
     <div class="text-center section w-full h-full mt-20">
       
@@ -13,6 +18,7 @@
         disable-page-swipe
         is-expanded
         is-dark
+    
       >
         <template v-slot:day-content="{ day, attributes }">
           <div class="flex flex-col h-full z-10 overflow-hidden">
@@ -33,43 +39,50 @@
     </div>
     </div>
     </div>
+    <div v-if="teamLeaves<=0" class="w-screen h-screen fixed top-0 left-0 flex items-center justify-center z-50 bg-[#00000068]">
+      <LoaderSpiner/>
+    </div>
   </template>
   
   <script setup>
-  import { ref,onMounted, watch} from "vue"
+  import { computed, onMounted, ref,watch} from "vue"
   import { useUserStore } from "@/store/userStore";
- import {storeToRefs} from "pinia"
+  import { useConfigStore } from "@/store/configStore";
+import { storeToRefs } from "pinia";
+import LoaderSpiner from "./LoaderSpiner.vue";
   const userStore = useUserStore()
-  const {user} = storeToRefs(userStore)
+  const configStore = useConfigStore()
+  const selectedTeam = ref('all')
+ const {teamLeaves} = storeToRefs(userStore)
   const masks = ref({
           weekdays: 'WWW',
   })
-  const attributes = ref([])
+  
   
   const colorArray = ['red','blue','green','teal','purple','fuchsia','pink','yellow']
 
-  watch(user,()=>{
-  userStore.fetchTeamLeaves()
-  })
   
- onMounted(()=>{
-  userStore.fetchTeamLeaves()
-  
-  const newLeaves = userStore.getTeamLeaves.map((item,i)=>{
-    return{
-            key: item._id,
-            customData: {
-              title:item.name,
-              class: `text-white h-[23px] rounded-none ${colorArray[i % colorArray.length]}`,
-              
-            },
-            dates:{start:new Date(new Date(item.dateFrom).getFullYear(),new Date(item.dateFrom).getMonth(),parseInt(item.dateFrom.substring(8,10))),end:new Date(new Date(item.dateTo).getFullYear(),new Date(item.dateTo).getMonth(),parseInt(item.dateTo.substring(8,10)))},
-    }
+  const attributes = computed(()=>{
+    return teamLeaves.value.filter((item)=>item.type!=='remote works').map((item, i) => {
+      return {
+        key: item._id,
+        customData: {
+          title: item.name,
+          class: `text-white h-[23px] rounded-none ${colorArray[i % colorArray.length]}`,
+
+        },
+        dates: { start: new Date(new Date(item.dateFrom).getFullYear(), new Date(item.dateFrom).getMonth(), parseInt(item.dateFrom.substring(8, 10))), end: new Date(new Date(item.dateTo).getFullYear(), new Date(item.dateTo).getMonth(), parseInt(item.dateTo.substring(8, 10))) },
+      }
+    })
   })
-  console.log(newLeaves)
-  attributes.value=newLeaves
- })
- 
+
+  watch(selectedTeam,()=>{
+    userStore.fetchTeamLeaves(selectedTeam.value)
+  })
+
+onMounted(()=>{
+  configStore.fetchTeams()
+})
 
   </script>
   

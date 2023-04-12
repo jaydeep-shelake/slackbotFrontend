@@ -1,13 +1,13 @@
 <template>
     <NavBar/>
-    <main class="w-full h-screen bg-ss-dark flex items-start justify-start mt-[70px]">
+    <main class="w-full h-screen bg-ss-dark flex items-start justify-center pl-16">
      <SideBar/>
-     <slot>
+     <slot >
       <ConfigrationComp/>
     </slot>
   
     </main>
-    
+
   </template>
   
   <script setup>

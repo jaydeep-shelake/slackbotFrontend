@@ -12,7 +12,7 @@
             <LoaderSpiner/>
         </div>
         <div v-else class="w-full flex flex-col items-center justify-center text-white">
-            <div class="w-full flex flex-col items-center justify-center">
+            <div class="w-full flex  items-center justify-center flex-wrap">
                 <div v-for="approver in configStore.currentTeam.approvers" :key="approver._id" class="w-[170px] h-[150px] flex flex-col items-center justify-center box-shadow-user-card p-2 bg-black rounded-sm" >
                    <img :src="approver.avatar" :alt="approver.name" class="w-[40px] h-[40px] rounded-full">
                     <p class="text-md text-center mt-2">{{ approver.name }}</p>
@@ -20,9 +20,9 @@
                 </div> 
                 
             </div>
-            <div class="w-full flex items-center justify-evenly mt-10">
+            <div class="w-full flex items-center justify-evenly mt-10 flex-wrap">
                 
-                <div v-for="member in configStore.getTeamMembers " :key="member._id" class="w-[170px] h-[150px] flex flex-col items-center justify-center box-shadow-user-card p-2 bg-black rounded-sm mx-2" >
+                <div v-for="member in configStore.getTeamMembers " :key="member._id" class="w-[170px] h-[150px] flex flex-col items-center justify-center box-shadow-user-card p-2 bg-black rounded-sm m-2" >
                     <img :src="member.avatar" :alt="member.name" class="w-[40px] h-[40px] rounded-full">
                     <p class="text-md text-center mt-2">{{ member.name }}</p>
                     <p class="text-sm text-ss-purple">member</p>

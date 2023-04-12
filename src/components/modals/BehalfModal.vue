@@ -29,7 +29,7 @@
                       ></path>
                     </svg>
                     <input
-                      class="flex-grow pl-8 pr-2 py-2 bg-black rounded w-full text-ss-purple"
+                      class="flex-grow pl-8 pr-2 py-2 bg-black rounded w-full text-ss-purple border border-ss-light-purple"
                       :value="inputValue.start"
                       v-on="inputEvents.start"
                     />
@@ -62,7 +62,7 @@
                       ></path>
                     </svg>
                     <input
-                      class="bg-black flex-grow pl-8 pr-2 py-2 rounded w-full text-ss-purple"
+                      class="bg-black flex-grow pl-8 pr-2 py-2 rounded w-full text-ss-purple border border-ss-light-purple"
                       :value="inputValue.end"
                       v-on="inputEvents.end"
                     />
@@ -70,15 +70,14 @@
                 </div>
               </template>
             </v-date-picker>
-            <div class="w-full flex items-center justify-start my-3">
+            <div class="w-full flex items-center justify-start mb-3 mt-6">
                <p class="text-white text-xs">Applying on behalf of</p>
                <p class="text-ss-purple text-sm ml-2">{{  selectedUser.name }}</p>
               </div>
-            <input class="ss-input" type="text" :value="approver?.name" disabled />
             <select
               v-model="type"
               type="text"
-              class="ss-input"
+              class="ss-input border border-ss-light-purple"
               placeholder="Enter Type"
             >
               <option
@@ -88,11 +87,11 @@
                 Select Type
               </option>
               <option
-                value="earned leaves"
-                class="text-white bg-black border-none outline-none w-full"
+                :value="leaveType"
+                class="text-white bg-black border-none outline-none w-full capitalize"
                  v-for="leaveType in leaveStore.leaveTypes" :key="leaveType"
               >
-                {{ leaveType }}
+                {{ makeCapitalize(leaveType) }}
               </option>
             
             </select>
@@ -100,7 +99,7 @@
             <select
               v-model="substitute"
               type="text"
-              class="ss-input"
+              class="ss-input border border-ss-light-purple"
               placeholder="Substitute"
             >
               <option
@@ -123,7 +122,7 @@
                 v-model="desc"
                 name="reason"
                 id="reason"
-                class="ss-input"
+                class="ss-input border border-ss-light-purple"
               ></textarea>
             </div>
             <button
@@ -143,6 +142,7 @@
 <script setup>
 import {ref,defineProps,defineEmits} from "vue"
 import { useLeavesStore } from '@/store/leavesStore';
+import {makeCapitalize} from "@/helpers/helpers"
 const leaveStore  = useLeavesStore()
 const props  = defineProps({
     userData:{

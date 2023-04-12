@@ -10,6 +10,8 @@ export const useLeavesStore= defineStore("leavesStore",{
             allLeaves:[],
             loading:false,
             leaveTypes:[],
+            leaveTypeCount:[],
+            userLeaves:[], // each of clicked user leaves for admin
             leavesLoading:false,
             err:null,
             socket:'',
@@ -17,20 +19,36 @@ export const useLeavesStore= defineStore("leavesStore",{
         }
     },
     actions:{
-        async fetchLeaves(){
-           
-
+        async fetchLeaves(id){
             this.loading=true
+            if(id){
+                const {data} = await api.get(`/leaves?userId=${id}`)
+            this.userLeaves=data
+             
+            }
+            else
+            {
             const userId = useUserStore().userDetails.slackId
             const {data} = await api.get(`/leaves?userId=${userId}`)
-            // console.log(data)
             this.allLeaves=data
+            }
+           
             this.loading=false
             
             
         },
+        async fetchLeavesInRange(dateFrom,dateTo,id){
+          if(id){
+            this.loading=true
+            const {data} = await api.get(`/leaves/filter-leaves?userId=${id}&dateTo=${dateTo}&dateFrom=${dateFrom}`)
+            this.userLeaves=data
+            this.loading=false
+          }
+
+        },
      async fetchLeavTypes(){
          const {data} = await api.get('leaves/allLeavesType')
+         this.leaveTypeCount = data
          this.leaveTypes = data.map(type=>type.type)
      },
         async addLeave(leave){
@@ -40,7 +58,7 @@ export const useLeavesStore= defineStore("leavesStore",{
             const userTeam  = useUserStore().team
             const approverId =useUserStore().approverId
             const {data} = await api.post('/leaves',{
-                slackId: userDetails.slackId,
+                slackId: leave ? leave.userData.userId:userDetails.slackId,
                 teamId:teamDetails.teamId,
                 approver: leave.approver?leave.approver:approverId, // aprover's slack id
                 substitute:leave.substitute?leave.substitute:'', // substitute user id
@@ -48,7 +66,7 @@ export const useLeavesStore= defineStore("leavesStore",{
                 dateTo:leave.dateTo,
                 type:leave.type,
                 desc:leave.desc,
-                name:userDetails.name,
+                name:leave?leave.userData.name:userDetails.name,
                 team:userTeam,
                 substituteName:leave.substituteData.name,
                 substituteAvatar:leave.substituteData.avatar,
@@ -57,13 +75,15 @@ export const useLeavesStore= defineStore("leavesStore",{
                 approverAvatar:leave.approverData.avatar
             })
             console.log(data)
-            this.allLeaves=[...this.allLeaves,data]
+            if(!leave){
+                this.allLeaves=[...this.allLeaves,data]
+            }
             this.leavesLoading=false
         },
        async cancelLeave(leave){
          this.loading=true
-        const {data} = await  api.get(`leaves/cancelLeave/${leave._id}`)
-        this.allLeaves=[...this.addLeaves,data]
+        const {data} = await  api.put(`leaves/cancelLeave/${leave._id}`)
+        this.allLeaves=[...this.allLeaves,data]
         this.loading=false
        }
     }

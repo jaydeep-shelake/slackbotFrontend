@@ -6,7 +6,7 @@
     <div v-else class="w-[90%] h-auto mt-10 bg-ss-body rounded-lg flex flex-col items-start justify-start px-8 py-6">
   <div class="w-full flex items-center justify-between">
      <p class="text-2xl text-white">web-test</p>
-     <button class="ss-btn bg-ss-purple">Submit standup</button>
+    
   </div>
   <div class="w-full flex items-center justify-start mt-2 ml-2">
         <div class="py-1 px-3 text-ss-purple bg-ss-light-purple rounded-xl mx-2">
@@ -53,7 +53,7 @@
           <img class="w-[20px] h-[20px]" src="https://res.cloudinary.com/qtalk/image/upload/v1674196054/SuperLeaves/X_bzheyy.svg" alt="cross">
         </div>
       </div>
-      <div @click="configStore.toggleUserModal" class="add-frame w-auto my-2 mr-2  px-4 rounded-sm bg-black flex items-center justify-between">
+      <div @click="configStore.toggleUserModal(true)" class="add-frame w-auto my-2 mr-2  px-4 rounded-sm bg-black flex items-center justify-between">
          
             <p class="text-white" >Add Member</p>
        
@@ -109,50 +109,8 @@
       <div class=" py-1 px-3 bg-ss-alpha-purple text-ss-light-purple rounded-md mb-4 ">
        <p class="text-white text-l">Report format :</p>
       </div>
-       <div class="w-full flex items-start justify-start cursor-pointer">
-      
-        <div @click="messageViewType='questions' "  class="w-[200px] mx-2 p-2 rounded-md bg-black flex flex-col items-center justify-between " :class="{'border-2 border-ss-purple':messageViewType==='questions'}">
-          <p class="text-white">Group by question</p>
-          <div class="w-full p-2 bg-ss-light-purple mt-4 rounded-md">
-            <p class="text-ss-purple text-l font-semibold">Daily Standup Report</p>
-            <div class="w-full flex flex-col items-start justify-center mt-2">
-              <p class="text-ss-purple text-l ">Question 1</p>
-              <p class="text-gray-500 text-xs pl-2">User 1</p>
-              <p class="text-gray-600 text-sm pl-2">Answer for quetion 1</p>
-              <p class="text-gray-500 text-xs pl-2">User 2</p>
-              <p class="text-gray-600 text-sm pl-2">Answer for quetion 1</p>
-            </div>
-            <div class="w-full flex flex-col items-start justify-center mt-2">
-              <p class="text-ss-purple text-l ">Question 2</p>
-              <p class="text-gray-500 text-xs pl-2">User 1</p>
-              <p class="text-gray-600 text-sm pl-2">Answer for quetion 2</p>
-              <p class="text-gray-500 text-xs pl-2">User 2</p>
-              <p class="text-gray-600 text-sm pl-2">Answer for quetion 2</p>
-            </div>
-          </div>
-        </div>
-        <div @click="messageViewType='user'" class="w-[200px] p-2 rounded-md bg-black flex flex-col items-center justify-between " :class="{'border-2 border-ss-purple':messageViewType==='user'}">
-          <p class="text-white">Group by user</p>
-          <div class="w-full p-2 bg-ss-light-purple mt-4 rounded-md">
-            <p class="text-ss-purple text-l font-semibold">Daily Standup Report</p>
-            <div class="w-full flex flex-col items-start justify-center mt-2">
-              <p class="text-ss-purple text-l ">User 1</p>
-              <p class="text-gray-500 text-xs pl-2">Question 1</p>
-              <p class="text-gray-600 text-sm pl-2">Answer for quetion 1</p>
-              <p class="text-gray-500 text-xs pl-2">Question 2</p>
-              <p class="text-gray-600 text-sm pl-2">Answer for quetion 2</p>
-            </div>
-            <div class="w-full flex flex-col items-start justify-center mt-2">
-              <p class="text-ss-purple text-l ">User 2</p>
-              <p class="text-gray-500 text-xs pl-2">Question 1</p>
-              <p class="text-gray-600 text-sm pl-2">Answer for quetion 1</p>
-              <p class="text-gray-500 text-xs pl-2">Question 2</p>
-              <p class="text-gray-600 text-sm pl-2">Answer for quetion 2</p>
-            </div>
-          </div>
-        </div>
-       </div>
-     
+     <!-- format  -->  
+      <ReportFormat @get-format="format=>messageViewType=format"/>
     </div>
 
     <div class="flex w-full items-center justify-start mt-5">
@@ -183,6 +141,7 @@
 import { ref, watch, nextTick,watchEffect} from '@vue/runtime-core';
 import LoaderSpiner from './LoaderSpiner.vue';
 import UsersModal from './modals/UsersModal.vue';
+import ReportFormat from './ReportFormat.vue';
 import { useRoute } from 'vue-router';
 import { useConfigStore } from '@/store/configStore';
  const {id}= useRoute().params

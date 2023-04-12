@@ -52,7 +52,7 @@ body{
    @apply  text-white text-lg  w-full p-2 rounded-sm
   }
   .ss-input{
-    @apply outline-none  p-2 rounded-md bg-black  w-full my-3 text-ss-purple
+    @apply outline-none  p-2 rounded-md bg-black  w-full my-3
   }
   .add-frame {
    @apply flex flex-col items-center justify-center border-2 border-dashed border-ss-purple p-3 bg-black cursor-pointer
@@ -61,7 +61,6 @@ body{
   ::-webkit-scrollbar {
     width: 5px;
     border-radius: 4px;
-   
   }
   
   /* Track */
