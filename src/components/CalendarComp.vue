@@ -59,7 +59,7 @@ import LoaderSpiner from "./LoaderSpiner.vue";
   })
   
   
-  const colorArray = ['red','blue','green','teal','purple','fuchsia','pink','yellow']
+  const colorArray = ['red','blue','green','teal','purple','fuchsia','pink','aqua']
 
   
   const attributes = computed(()=>{
